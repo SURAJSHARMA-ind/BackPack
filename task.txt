@@ -1,0 +1,7 @@
+generate seed 
+generate public and private key
+if click on solana then generate for solana 
+if click on Ethereum then generate for Ethereum 
+
+Show user balance : BY using alchemy
+
