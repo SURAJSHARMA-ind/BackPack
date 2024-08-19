@@ -1,8 +1,13 @@
-# React + Vite
+# Backpack Wallet Clone
+- This project is a basic clone of the Backpack crypto wallet, designed to provide foundational functionality for a Hierarchical Deterministic (HD) wallet. The wallet currently supports generating seed phrases and creating multiple wallets for both the Solana and Ethereum blockchains.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Features
+- <b> HD Wallet:</b> Implements Hierarchical Deterministic wallet structure, allowing for secure and systematic generation of multiple addresses from a single seed phrase.
+Seed Phrase Generation: Generates a seed phrase that can be used to restore all generated wallets.
 
-Currently, two official plugins are available:
+- <b>Multi-Blockchain Support:</b> Supports wallet creation for both Solana and Ethereum, two of the most popular blockchains.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# Tech Stack
+- <b>Frontend:</b> React.js with Tailwind CSS for styling.
+
+- <b>Cryptography:</b> Utilizes libraries like ethers.js for Ethereum and @solana/web3.js for Solana to handle wallet generation and other cryptographic operations.
