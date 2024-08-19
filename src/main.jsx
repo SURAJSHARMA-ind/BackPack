@@ -20,11 +20,8 @@ createRoutesFromElements(
     <Route path='/secretphrase' element={<SeedGenerator/>}/>
     <Route path='/createpass' element={<CreatePass/>}/>
     <Route path='/allset' element={<AllSet/>}/>
-    <Route path='/mainscreen' element={<AllSet/>}/>
   </Route>
-)
-
-)
+))
 
 
 
