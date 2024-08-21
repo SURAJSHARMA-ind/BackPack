@@ -7,6 +7,8 @@ function AllSet() {
     navigator.clipboard.writeText('surajsharma2740')
   };
 
+  
+  
   const navigate = useNavigate();
 
   return (
@@ -29,7 +31,7 @@ function AllSet() {
           <p>surajsharma2740</p>
         </div>
       </div>
-      <button onClick={() => navigate('/mainscreeen')} className="p-2 bg-white text-black w-full md:w-1/3 text-md rounded-lg hover:bg-gray-300">
+      <button onClick={() => navigate('/mainscreen')} className="p-2 bg-white text-black w-full md:w-1/3 text-md rounded-lg hover:bg-gray-300">
         Let's go
       </button>
     </div>

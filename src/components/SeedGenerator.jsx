@@ -1,58 +1,65 @@
-import { React, useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import { generateMnemonic, mnemonicToSeedSync } from 'bip39';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { MnemonicGenerator, generateKeyPairs } from '../redux/wallet/seedGeneratorSlice';
 
 function SeedGenerator() {
-  const navigate = useNavigate()
+  const dispatch = useDispatch();
+  const mnemonic = useSelector((state) => state.seedGenerator.mnemonic);
+  
+
+  const navigate = useNavigate();
   const [isChecked, setIsChecked] = useState(false);
-  const [coppytoggle, setcoppytoggle] = useState("Click anywhere on this card to copy")
+  const [coppytoggle, setcoppytoggle] = useState("Click anywhere on this card to copy");
+
+  // Dispatch to generate a mnemonic if not generated yet
+  if (!mnemonic) {
+    dispatch(MnemonicGenerator());
+    localStorage.setItem('mnemonic', mnemonic);
+   
+  }
+  if(mnemonic){
+    localStorage.setItem('mnemonic', mnemonic);
+  }
 
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
   };
-  const [mnemonic, setMnemonic] = useState("");
-  const MnemonicGenerator = () => {
-    const mnemonicphrase = generateMnemonic();
-    setMnemonic(mnemonicphrase);
-    console.log(`Generated mnemonic: ${mnemonicphrase}`);
-  };
-  useEffect(() => {
-    MnemonicGenerator()
-  }, [])
 
   const copytoClipboard = () => {
-    navigator.clipboard.writeText(mnemonic)
-    setcoppytoggle("Copied")
-      
+    navigator.clipboard.writeText(mnemonic);
+    setcoppytoggle("Copied");
   };
 
-  const mnemonicArray = mnemonic.split(' ')
+  const mnemonicArray = mnemonic.split(' ');
   console.log(mnemonicArray);
+
   return (
-    <div className='h-screen bg-black flex flex-col justify-center items-center text-white'>
-      <div className="1st items-center justify-center flex flex-col">
-        <h1 className='text-4xl p-2 font-bold'>Secret Recovery Phrase</h1>
-        <p className=' text-gray-400 -2 '>Save these words in a safe place.</p>
-        <Link to={'/warning'} > <p className='text-blue-500 p-2'>Read the warnings again</p></Link>
+    <div className='flex flex-col justify-center items-center min-h-screen bg-black text-white p-4 md:p-6 lg:p-8'>
+      <div className='flex flex-col items-center mb-6'>
+        <h1 className='text-3xl md:text-4xl lg:text-5xl font-bold mb-2 text-center'>Secret Recovery Phrase</h1>
+        <p className='text-gray-400 text-sm md:text-base lg:text-lg text-center'>Save these words in a safe place.</p>
+        <Link to='/warning'>
+          <p className='text-blue-500 text-sm md:text-base lg:text-lg mt-2'>Read the warnings again</p>
+        </Link>
       </div>
 
-      <div onClick={copytoClipboard} className="bg-neutral-800 cursor-pointer text-white p-6 mt-8 rounded-lg shadow-md w-full max-w-xl">
-        <div  className="grid cursor-pointer grid-cols-3 gap-4 mb-4">
+      <div onClick={copytoClipboard} className="bg-neutral-800 cursor-pointer text-white p-4 md:p-6 lg:p-8 mt-8 rounded-lg shadow-md w-full max-w-lg md:max-w-xl lg:max-w-2xl">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-4 mb-4">
           {mnemonicArray.map((word, index) => (
-            <div key={index}  className="flex items-center">
+            <div key={index} className="flex items-center text-sm md:text-base lg:text-lg">
               <span className="mr-2 text-gray-400">{index + 1}</span>
               <span>{word}</span>
             </div>
           ))}
         </div>
-        <hr />
-        <div className="text-center mt-3 text-gray-300 text-sm">
+        <hr className="my-4" />
+        <div className="text-center text-gray-300 text-sm md:text-base lg:text-lg">
           {coppytoggle}
         </div>
       </div>
 
-      <div className="flex items-center m-2">
+      <div className="flex items-center mt-6 text-sm md:text-base lg:text-lg">
         <input
           type="checkbox"
           id="checkbox"
@@ -60,22 +67,20 @@ function SeedGenerator() {
           checked={isChecked}
           onChange={handleCheckboxChange}
         />
-        <label htmlFor="checkbox" className="text-sm">
+        <label htmlFor="checkbox" className="text-gray-300">
           I saved my recovery phrase.
         </label>
       </div>
 
       <button
-        onClick={() => { navigate('/createpass') }}
-        className={`w-1/6 py-2 px-4 rounded-md text-black ${isChecked ? 'bg-white hover:bg-gray-200' : 'bg-gray-600 cursor-not-allowed'}`}
+        onClick={() => navigate('/createpass')}
+        className={`mt-6 py-2 px-4 rounded-md text-black ${isChecked ? 'bg-white hover:bg-gray-200' : 'bg-gray-600 cursor-not-allowed'}`}
         disabled={!isChecked}
       >
         Next
       </button>
     </div>
-
-
-  )
+  );
 }
 
-export default SeedGenerator
+export default SeedGenerator;

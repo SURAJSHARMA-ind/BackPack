@@ -2,3 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+/* In your CSS file or in a Tailwind @layer directive */
+.bg-sol {
+    background-image: url('/src/assets/sol.png');
+    border:none;
+    background-size: cover;
+  }
+  
+.bg-eth{
+    background-image: url('src\assets\Ethereum ETH.png');
+    width: 3rem;
+    height: 3rem;
+    border:none;
+}
+
+*{
+  user-select: none;
+}

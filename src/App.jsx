@@ -34,7 +34,7 @@ function App() {
 
   return (
     <>
-    <Outlet/>
+    <Outlet />
     </>
     // <div className='h-screen bg-black text-white'>
     //   <button onClick={MnemonicGenerator} className='rounded border-solid bg-gray-400 p-3'>Generate Mnemonic</button>
