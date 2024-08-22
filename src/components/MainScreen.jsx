@@ -4,37 +4,55 @@ import { FaArrowDown, FaArrowUp } from "react-icons/fa6";
 import { LuPanelRight } from "react-icons/lu";
 import { useSelector, useDispatch } from 'react-redux';
 import { MnemonicGenerator, generateKeyPairs } from '../redux/wallet/seedGeneratorSlice';
+import { setWalletNo } from '../redux/wallet/navigateSlice';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-const apiKey = import.meta.env.Apikey;
+import 'dotenv/config'
+const apiKey = '1SEhrahH3UqRPtrQKfigCSLqM1Kej6sy';
 
+console.log('REACT_APP_API_KEY:', process.env.REACT_APP_API_KEY);
 
 function MainScreen() {
+  const [copy, setCopy] = useState(null);
+  const [Amount, setAmount] = useState("0.0");
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+
+  
+  const wallets = useSelector((state) => state.seedGenerator.wallets);
+  const walletno = useSelector((state) => state.navigator.wallet);
+  const publicKey = wallets[walletno]?.publicKey || '';
+  console.log('wallet is ',wallets)
+  console.log('publickey is :', publicKey);
   let username = "Animal";
-  let WalletNo = "1";
   let PercentInc = '5%';
 
-  const navigate = useNavigate()
-  const dispatch = useDispatch();
+  const copyHandler = () => {
+    navigator.clipboard.writeText(publicKey).then(() => {
+      setCopy('Copied!');
+      setTimeout(() => {
+        setCopy(null);
+      }, 2000);
+    });
+  };
 
-  const mnemonic = useSelector((state) => state.seedGenerator.mnemonic);
-  console.log(`mnemonic is `, mnemonic);
-
-  const wallets = useSelector((state) => state.seedGenerator.wallets);
-  console.log(`wallets are `, wallets);
-
-  const [Amount, setAmount] = useState("0.0");
+  console.log('apikey is ', apiKey);
+  
 
   const handlePostRequest = async () => {
     const postData = {
       "jsonrpc": "2.0",
       "id": 1,
       "method": "getBalance",
-      "params": apiKey
-    };
+      "params": [`${publicKey}`]// Include the publicKey in the params
+    }
+   
+    
+
+
     console.log('POSTData is ', postData);
     try {
-      const response = await axios.post('https://solana-mainnet.g.alchemy.com/v2/1SEhrahH3UqRPtrQKfigCSLqM1Kej6sy', postData, {
+      const response = await axios.post(`https://solana-mainnet.g.alchemy.com/v2/${apiKey}`, postData, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -47,7 +65,12 @@ function MainScreen() {
       console.error('Error:', error);
     }
   };
-
+  useEffect(() => {
+    if (wallets.length < 1) {
+        dispatch(generateKeyPairs());
+    }
+}, [])
+ 
   useEffect(() => {
     handlePostRequest();
   }, []);
@@ -60,17 +83,24 @@ function MainScreen() {
           <h1 className='text-2xl text-red-400'>{username.slice(0, 1)}1</h1>
         </div>
 
-        <div className='bg-neutral-800 border border-gray-600 justify-center text-center cursor-pointer items-center overflow-hidden rounded-2xl flex flex-col md:flex-row gap-4 md:gap-8 mt-4 w-full md:w-1/2 lg:w-1/3 h-12'>
-          <div className='ml-2 bg-sol rounded-full w-10 h-10'></div>
-
-          <select onClick={() => navigate('/walletpopup')} name="" id="" className='bg-neutral-800 text-center cursor-pointer font-medium border-gray-600 w-full md:w-1/2 h-12 border p-2'>
-            <option>wallet {1}</option>
+        <div className='bg-neutral-800 hover:bg-neutral-900 border border-gray-600  justify-center text-center cursor-pointer items-center overflow-hidden rounded-2xl flex flex-col md:flex-row gap-4 md:gap-8 mt-4 w-full md:w-1/2 lg:w-1/3 h-12'>
+          <div className='rounded-full bg-sol  w-10 h-10 ' />
+          <select onClick={() => navigate('/walletpopup')} name="" id="" className='bg-neutral-800 text-center hover:bg-neutral-900 cursor-pointer font-medium border-gray-600 w-full md:w-1/2 h-12 border p-2'>
+            <option>wallet{walletno + 1}</option>
           </select>
 
-          <svg xmlns="http://www.w3.org/2000/svg" fill="#808080" viewBox="0 0 24 24" width="24px" height="24px">
-            <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z" />
-          </svg>
+          <div className='flex flex-row' onClick={copyHandler}>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="#808080" viewBox="0 0 24 24" width="24px" height="24px">
+              <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z" />
+            </svg>
+            <p className='text-sm text-gray-500 ml-2 transition-opacity duration-300 ease-in-out opacity-100'>
+              {copy}
+            </p>
+          </div>
+
         </div>
+
+
 
         <LuPanelRight className='w-6 h-6 cursor-pointer mt-2' />
       </div>

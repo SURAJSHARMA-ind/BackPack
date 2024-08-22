@@ -16,11 +16,10 @@ function SeedGenerator() {
   if (!mnemonic) {
     dispatch(MnemonicGenerator());
     localStorage.setItem('mnemonic', mnemonic);
+    dispatch(generateKeyPairs())
    
   }
-  if(mnemonic){
-    localStorage.setItem('mnemonic', mnemonic);
-  }
+ 
 
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
@@ -44,7 +43,7 @@ function SeedGenerator() {
         </Link>
       </div>
 
-      <div onClick={copytoClipboard} className="bg-neutral-800 cursor-pointer text-white p-4 md:p-6 lg:p-8 mt-8 rounded-lg shadow-md w-full max-w-lg md:max-w-xl lg:max-w-2xl">
+      <div onClick={copytoClipboard} className="bg-neutral-800 cursor-pointer text-white p-2 md:p-6 lg:p-8 mt-8 rounded-lg shadow-md w-full max-w-lg md:max-w-xl lg:max-w-2xl">
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-4 mb-4">
           {mnemonicArray.map((word, index) => (
             <div key={index} className="flex items-center text-sm md:text-base lg:text-lg">
@@ -53,7 +52,7 @@ function SeedGenerator() {
             </div>
           ))}
         </div>
-        <hr className="my-4" />
+        <hr className="my-2" />
         <div className="text-center text-gray-300 text-sm md:text-base lg:text-lg">
           {coppytoggle}
         </div>

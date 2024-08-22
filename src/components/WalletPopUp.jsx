@@ -1,72 +1,94 @@
-import React, { useEffect } from 'react'
-import { MnemonicGenerator, generateKeyPairs } from '../redux/wallet/seedGeneratorSlice'
-import { useSelector, useDispatch } from 'react-redux'
-import { FaPlus } from "react-icons/fa";
-import { RxCross2 } from "react-icons/rx";
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { FaPlus } from 'react-icons/fa';
+import { RxCross2 } from 'react-icons/rx';
 import { useNavigate } from 'react-router-dom';
-import { BsThreeDotsVertical } from "react-icons/bs";
-
+import { BsThreeDotsVertical } from 'react-icons/bs';
+import { generateKeyPairs } from '../redux/wallet/seedGeneratorSlice';
+import { setWalletNo } from '../redux/wallet/navigateSlice';
 
 function WalletPopUp() {
-    const wallets = useSelector((state) => state.seedGenerator.wallets)
-    console.log(`wallets are `, wallets);
-    const dispatch = useDispatch()
-    const navigate = useNavigate()
+    const wallets = useSelector((state) => state.seedGenerator.wallets);
+    const walletno =useSelector((state)=>state.navigator.wallet)
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const [copiedIndex, setCopiedIndex] = useState(null);
+
+    const onclickHandler = (index) => {
+        dispatch(setWalletNo(index))
+        console.log(walletno)
+         navigate('/mainscreen')
+    };
+
+    
+    const copyHandler = (data, index) => {
+        navigator.clipboard.writeText(data.publicKey).then(() => {
+            setCopiedIndex(index);
+            setTimeout(() => {
+                setCopiedIndex(null);
+            }, 2000);
+        });
+    };
+
+    const SelectCurrency = (e) => {
+        console.log(e.target.value);
+    };
 
     useEffect(() => {
         if (wallets.length < 1) {
-
-            dispatch(generateKeyPairs())
+            dispatch(generateKeyPairs());
         }
-    }, [])
+    }, [wallets.length, dispatch]);
 
     const addWalletHandler = () => {
-        dispatch(generateKeyPairs())
-    }
+        dispatch(generateKeyPairs());
+    };
 
     return (
-        <div className='bg-black w-full h-screen flex flex-col justify-start text-white ' >
+        <div className='max-h-full min-h-screen bg-black flex flex-col justify-start text-white'>
             <div className='flex flex-start'>
-                <RxCross2 onClick={() => navigate('/mainscreen')} className='text-3xl cursor-pointer  ' />
+                <RxCross2 onClick={() => navigate('/mainscreen')} className='text-3xl m-3 text-gray-400 hover:text-gray-500 cursor-pointer' />
             </div>
-            <div className='flex justify-center flex-col w-full items-center '>
-                <h1 >Wallets</h1>
-                <select className='bg-neutral-800 rounded-md m-2 p-2 text-white' name="" id="">
-                    <option value="">Solana</option>
-                    <option value="">Ethereum</option>
+            <div className='flex justify-center flex-col w-full items-center'>
+                <h1 className='text-xl'>Wallets</h1>
+                <select onChange={SelectCurrency} className='bg-neutral-800 rounded-md hover:bg-neutral-900 m-2 p-2 text-white'>
+                    <option value="Solana">Solana</option>
+                    <option value="Ethereum">Ethereum</option>
                 </select>
             </div>
 
-            {wallets.map((data, index) => {
-                return <div className='bg-gray-900 flex ml-3 mr-3 mt-2  rounded-md h-20  items-center justify-between '>
-
-                    <div className='flex flex-row m-2 gap-2 s'>
-                        <img src="src\assets\sol.png" alt="Sol" className='w-8 h-8 rounded-full' />
-                        <div className='w-64 overflow-hidden'>
+            {wallets.map((data, index) => (
+                <div key={index} className= {`${walletno!=index && 'border-gray-500'}  bg-gray-900 border border-blue-600 hover:bg-gray-950 cursor-pointer flex ml-3 mr-3 mt-2 rounded-md h-18 items-center justify-between`}>
+                    <div onClick={() => onclickHandler(index)} className='flex flex-row m-2 overflow-hidden w-full gap-2 items-center'>
+                        <div className='w-6 h-6 bg-sol rounded-full' />
+                        <div className='w-full overflow-hidden'>
                             <h1>Wallet {index + 1}</h1>
-                            <p className=' truncate text-sm text-gray-500  '>{data.publicKey}</p>
-                            {console.log(data)}
+                            <p className='truncate w-1/6 text-sm text-gray-500'>{data.publicKey}</p>
                         </div>
-
                     </div>
+
                     <div className='mr-2 flex flex-row gap-3 cursor-pointer'>
-                        <svg onClick={()=>  navigator.clipboard.writeText(data.publicKey) } xmlns="http://www.w3.org/2000/svg" fill="#808080" viewBox="0 0 24 24" width="24px" height="24px">
-                            <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z" />
-                        </svg>
-                        <BsThreeDotsVertical className='text-xl mr-2'/>
-
+                        <div onClick={() => copyHandler(data, index)} className='flex items-center'>
+                            <svg className='w-4 h-4' xmlns="http://www.w3.org/2000/svg" fill="#808080" viewBox="0 0 24 24" width="24px" height="24px">
+                                <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z" />
+                            </svg>
+                            {copiedIndex === index && (
+                                <p className='text-sm text-gray-500 ml-2 transition-opacity duration-300 ease-in-out opacity-100'>
+                                    Copied!
+                                </p>
+                            )}
+                        </div>
+                        <BsThreeDotsVertical className='text-xl mr-2' />
                     </div>
-
                 </div>
-            })
-            }
+            ))}
 
-            <div onClick={addWalletHandler} className='flex flex-row m-3 cursor-pointer w-max text-blue-500 gap-2 items-center '>
+            <div onClick={addWalletHandler} className='flex flex-row m-3 cursor-pointer w-max text-blue-500 gap-2 items-center'>
                 <FaPlus />
-                <h1 >Add new wallet</h1>
+                <h1>Add new wallet</h1>
             </div>
         </div>
-    )
+    );
 }
 
-export default WalletPopUp
+export default WalletPopUp;

@@ -4,6 +4,7 @@ import { Keypair } from "@solana/web3.js";
 import { derivePath } from "ed25519-hd-key";
 import nacl from "tweetnacl";
 
+
 const initialState = {
   mnemonic: "",
   wallets: [], 
@@ -37,7 +38,7 @@ export const seedGeneratorSlice = createSlice({
       
 
       state.wallets.push({ publicKey, privateKey });
-      // localStorage.setItem('wallets',state.wallets)
+      localStorage.setItem('wallets',state.wallets)
       
       state.count += 1;
     },
