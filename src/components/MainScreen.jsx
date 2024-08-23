@@ -7,10 +7,8 @@ import { MnemonicGenerator, generateKeyPairs } from '../redux/wallet/seedGenerat
 import { setWalletNo } from '../redux/wallet/navigateSlice';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import 'dotenv/config'
-const apiKey = '1SEhrahH3UqRPtrQKfigCSLqM1Kej6sy';
 
-console.log('REACT_APP_API_KEY:', process.env.REACT_APP_API_KEY);
+const apiKey = import.meta.env.VITE_API_KEY;
 
 function MainScreen() {
   const [copy, setCopy] = useState(null);
@@ -18,10 +16,11 @@ function MainScreen() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
-  
+  const mnemonic = useSelector((state) => state.seedGenerator.mnemonic);
   const wallets = useSelector((state) => state.seedGenerator.wallets);
   const walletno = useSelector((state) => state.navigator.wallet);
   const publicKey = wallets[walletno]?.publicKey || '';
+  const privateKey = wallets[walletno]?.privateKey || '';
   console.log('wallet is ',wallets)
   console.log('publickey is :', publicKey);
   let username = "Animal";
@@ -34,10 +33,7 @@ function MainScreen() {
         setCopy(null);
       }, 2000);
     });
-  };
-
-  console.log('apikey is ', apiKey);
-  
+  };  
 
   const handlePostRequest = async () => {
     const postData = {
@@ -46,9 +42,6 @@ function MainScreen() {
       "method": "getBalance",
       "params": [`${publicKey}`]// Include the publicKey in the params
     }
-   
-    
-
 
     console.log('POSTData is ', postData);
     try {
