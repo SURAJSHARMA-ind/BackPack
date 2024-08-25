@@ -16,15 +16,16 @@ function MainScreen() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
-  const mnemonic = useSelector((state) => state.seedGenerator.mnemonic);
+  // const mnemonic = useSelector((state) => state.seedGenerator.mnemonic);
   const wallets = useSelector((state) => state.seedGenerator.wallets);
   const walletno = useSelector((state) => state.navigator.wallet);
   const publicKey = wallets[walletno]?.publicKey || '';
-  const privateKey = wallets[walletno]?.privateKey || '';
-  console.log('wallet is ',wallets)
+  // const privateKey = wallets[walletno]?.privateKey || '';
+  console.log('wallet is ', wallets)
   console.log('publickey is :', publicKey);
   let username = "Animal";
   let PercentInc = '5%';
+  let price = 10.00
 
   const copyHandler = () => {
     navigator.clipboard.writeText(publicKey).then(() => {
@@ -33,7 +34,7 @@ function MainScreen() {
         setCopy(null);
       }, 2000);
     });
-  };  
+  };
 
   const handlePostRequest = async () => {
     const postData = {
@@ -45,7 +46,7 @@ function MainScreen() {
 
     console.log('POSTData is ', postData);
     try {
-      const response = await axios.post(`https://solana-mainnet.g.alchemy.com/v2/${apiKey}`, postData, {
+      const response = await axios.post(`https://solana-devnet.g.alchemy.com/v2/${apiKey}`, postData, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -58,16 +59,32 @@ function MainScreen() {
       console.error('Error:', error);
     }
   };
-  useEffect(() => {
-    if (wallets.length < 1) {
-        dispatch(generateKeyPairs());
+  handlePostRequest()
+
+  const fetchSolPriceInUSD = async () => {
+    try {
+      const response = await axios.get('https://api.coingecko.com/api/v3/simple/price', {
+        params: {
+          ids: 'solana',         // Specifies that we want the price of Solana
+          vs_currencies: 'usd'   // Specifies that we want the price in USD
+        }
+      });
+      // const exchangeRate = response.data.solana.usd
+      console.log(`Current SOL price in USD: $${response.data.solana.usd}`);
+    } catch (error) {
+      console.error('Error fetching SOL price:', error);
     }
-}, [])
- 
+  };
+  
+  fetchSolPriceInUSD();
+  
   useEffect(() => {
-    handlePostRequest();
+    if (wallets.length == 0) {
+      dispatch(generateKeyPairs());
+    }
   }, []);
 
+  
 
   return (
     <div className=' max-h-full min-h-screen bg-black text-white flex flex-col gap-6 p-4 md:gap-8 lg:gap-10  w-min-full'>
@@ -99,7 +116,7 @@ function MainScreen() {
       </div>
 
       <div className='flex flex-col items-center gap-2 text-center'>
-        <h1 className='text-3xl md:text-4xl font-bold'>${Amount}</h1>
+        <h1 className='text-3xl md:text-4xl font-bold'>${price}</h1>
         <div className='flex gap-3 text-gray-400 font-light'>
           <h1>${Amount}</h1>
           <h1>{PercentInc}</h1>
@@ -118,6 +135,21 @@ function MainScreen() {
         <div className='flex flex-col items-center'>
           <IoMdSwap className='bg-neutral-800 cursor-pointer rounded-full p-3 w-10 h-10 text-blue-400' />
           <p className='font-thin text-sm cursor-pointer text-gray-300'>Swap</p>
+        </div>
+      </div>
+
+      <div className='bg-black h-14 mt-16 rounded-md text-center flex justify-between items-center  cursor-pointer hover:bg-neutral-900 m-0 p-0 text-white w-full'>
+        <div className='flex flex-row justify-center gap-2 items-center '>
+          <img className='rounded-full w-10 h-10 ml-2' src="src\assets\sol.png" alt="sol" />
+          <div>
+            <h1 className=' font-bold'>Solana</h1>
+            <h1 className=' text-lg text-gray-500 '>{Amount} Sol</h1>
+          </div>
+
+        </div>
+        <div className='mr-2'>
+          <h1>${price}</h1>
+          <h1 className='text-green-300'>{PercentInc}</h1>
         </div>
       </div>
 

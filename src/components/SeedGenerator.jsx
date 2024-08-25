@@ -15,9 +15,7 @@ function SeedGenerator() {
   // Dispatch to generate a mnemonic if not generated yet
   if (!mnemonic) {
     dispatch(MnemonicGenerator());
-    localStorage.setItem('mnemonic', mnemonic);
     dispatch(generateKeyPairs())
-   
   }
  
 
@@ -73,7 +71,7 @@ function SeedGenerator() {
 
       <button
         onClick={() => navigate('/createpass')}
-        className={`mt-6 py-2 px-4 rounded-md text-black ${isChecked ? 'bg-white hover:bg-gray-200' : 'bg-gray-600 cursor-not-allowed'}`}
+        className={`mt-6 py-2 px-4 w-1/6 rounded-md text-black ${isChecked ? 'bg-white hover:bg-gray-200' : 'bg-gray-600 cursor-not-allowed'}`}
         disabled={!isChecked}
       >
         Next

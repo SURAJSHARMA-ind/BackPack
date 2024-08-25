@@ -9,18 +9,21 @@ import { setWalletNo } from '../redux/wallet/navigateSlice';
 
 function WalletPopUp() {
     const wallets = useSelector((state) => state.seedGenerator.wallets);
-    const walletno =useSelector((state)=>state.navigator.wallet)
+    const walletno = useSelector((state) => state.navigator.wallet)
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [copiedIndex, setCopiedIndex] = useState(null);
+    const [isPopupVisible, setIsPopupVisible] = useState(false);
+    const [selectedWallet, setSelectedWallet] = useState(null);
+    const [password, setPassword] = useState("");
+    const [privateKey, setPrivateKey] = useState("");
+    const [copyprivatekey,setCopyprivatekey] = useState('Copy private key')
 
     const onclickHandler = (index) => {
-        dispatch(setWalletNo(index))
-        console.log(walletno)
-         navigate('/mainscreen')
+        dispatch(setWalletNo(index));
+        navigate('/mainscreen');
     };
 
-    
     const copyHandler = (data, index) => {
         navigator.clipboard.writeText(data.publicKey).then(() => {
             setCopiedIndex(index);
@@ -30,15 +33,39 @@ function WalletPopUp() {
         });
     };
 
+    const closeHandler = ()=>{
+        setIsPopupVisible(false)
+        setPassword('')
+        setPrivateKey('')
+        setCopyprivatekey('Copy private key')
+    }
+
+    const handlePrivateKeyClick = (data,index) => {
+        setSelectedWallet(wallets[index]);
+        setIsPopupVisible(true);
+    };
+
+    const storedPassword = localStorage.getItem('pass')
+    const handlePasswordSubmit = () => {
+        if (password == storedPassword) { // Replace with actual password validation
+            setPrivateKey(selectedWallet.privateKey);
+        }
+    };
+
     const SelectCurrency = (e) => {
         console.log(e.target.value);
     };
 
+    const handlecopyprivatekey =()=>{
+        navigator.clipboard.writeText(privateKey)
+        setCopyprivatekey('copied!')
+    }
+
     useEffect(() => {
-        if (wallets.length < 1) {
+        if (wallets.length == 0) {
             dispatch(generateKeyPairs());
         }
-    }, [wallets.length, dispatch]);
+    }, []);
 
     const addWalletHandler = () => {
         dispatch(generateKeyPairs());
@@ -58,7 +85,7 @@ function WalletPopUp() {
             </div>
 
             {wallets.map((data, index) => (
-                <div key={index} className= {`${walletno!=index && 'border-gray-500'}  bg-gray-900 border border-blue-600 hover:bg-gray-950 cursor-pointer flex ml-3 mr-3 mt-2 rounded-md h-18 items-center justify-between`}>
+                <div key={index} className={`${walletno != index && 'border-gray-500'}  bg-gray-900 border border-blue-600 hover:bg-gray-950 cursor-pointer flex ml-3 mr-3 mt-2 rounded-md h-18 items-center justify-between`}>
                     <div onClick={() => onclickHandler(index)} className='flex flex-row m-2 overflow-hidden w-full gap-2 items-center'>
                         <div className='w-6 h-6 bg-sol rounded-full' />
                         <div className='w-full overflow-hidden'>
@@ -78,7 +105,7 @@ function WalletPopUp() {
                                 </p>
                             )}
                         </div>
-                        <BsThreeDotsVertical className='text-xl mr-2' />
+                        <BsThreeDotsVertical className='text-xl mr-2' onClick={() => handlePrivateKeyClick(data,index)} />
                     </div>
                 </div>
             ))}
@@ -87,6 +114,45 @@ function WalletPopUp() {
                 <FaPlus />
                 <h1>Add new wallet</h1>
             </div>
+
+            {isPopupVisible && (
+                <div className="fixed inset-1 flex items-center justify-center  bg-black bg-opacity-50">
+                    <div className="bg-neutral-800 p-6 rounded-lg  shadow-lg text-white max-w-sm w-full">
+                        <h2 className="text-xl font-bold mb-4">Enter Password</h2>
+                        <input
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            className="w-full p-2 mb-4 border rounded-md focus:outline-none text-black focus:ring-2 focus:ring-blue-500"
+                            placeholder="Enter your password"
+                        />
+                        <button
+                            onClick={handlePasswordSubmit}
+                            className="w-full bg-blue-500 hover:bg-blue-700 text-white p-2 rounded-md"
+                        >
+                            View Private Key
+                        </button>
+                        {privateKey && (
+                            <div className="mt-4">
+                                <p >Private Key:</p>
+                                <p className="bg-gray-100 p-2 rounded-md text-sm text-gray-900 break-all">{privateKey}</p>
+                                <button
+                                    onClick={handlecopyprivatekey}
+                                    className="w-full mt-2 bg-green-500 hover:bg-green-700 text-white p-2 rounded-md"
+                                >
+                                    {copyprivatekey}
+                                </button>
+                            </div>
+                        )}
+                        <button
+                            onClick={closeHandler}
+                            className="mt-4 w-full bg-red-500 hover:bg-red-700 text-white p-2 rounded-md"
+                        >
+                            Close
+                        </button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

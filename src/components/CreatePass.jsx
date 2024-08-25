@@ -37,7 +37,7 @@ function CreatePass() {
           type="password"
           name="password"
           placeholder='Password'
-          className='w-full bg-neutral-900 text-gray-200 px-4 py-3 border-none rounded focus:outline-dashed'
+          className='w-full bg-neutral-900 text-gray-200 px-4 py-3 border-none rounded focus:outline-blue-400'
           required
           value={password}
           minLength="8"
@@ -48,7 +48,7 @@ function CreatePass() {
           type="password"
           name="confirmPassword"
           placeholder='Confirm Password'
-          className='w-full bg-neutral-900 text-gray-200 px-4 py-3 border-none rounded focus:outline-dashed'
+          className='w-full bg-neutral-900 text-gray-200 px-4 py-3 border-none rounded focus:outline-blue-400'
           required
           value={confirmPassword}
           minLength="8"
