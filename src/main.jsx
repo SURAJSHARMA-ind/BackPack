@@ -2,7 +2,7 @@ import { lazy, StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
-import { AllSet, CreatePass, MainScreen,WalletPopUp, RecoveryWarming, SeedGenerator, WalletMainScreen } from './components/index.js'
+import { AllSet, CreatePass, MainScreen,WalletPopUp, RecoveryWarming, SeedGenerator, WalletMainScreen,Importwallet } from './components/index.js'
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -25,6 +25,7 @@ const router = createBrowserRouter(
       <Route path='/createpass' element={<CreatePass />} />
       <Route path='/allset' element={<AllSet />} />
       <Route path='/walletpopup' element={<WalletPopUp />} />
+      <Route path='/importwallet' element={<Importwallet />} />
 
     </Route>
   ))

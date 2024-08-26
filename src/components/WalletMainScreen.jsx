@@ -1,11 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
 function WalletMainScreen() {
-   const  navigate = useNavigate()
+
+    const navigate = useNavigate()
+
     const CreateWallet = () => {
-       navigate('/warning')
+        navigate('/warning')
     };
+
+
     return (
         <div className='h-screen bg-black flex flex-col gap-6  justify-center items-center text-white'>
 
@@ -16,9 +20,11 @@ function WalletMainScreen() {
             </div>
 
             <div className="btns flex mt-8 flex-col justify-center items-center">
-                <button onClick={CreateWallet}  className='bg-white mb-1 font-medium rounded-lg hover:bg-gray-200 px-8 py-2 text-black'>Create a new wallet</button>
-                <button className='bg-gray-700 mt-1 w-full font-medium rounded-lg hover:bg-gray-800 px-8 py-2 text-white'>Import  wallet</button>
+                <button onClick={CreateWallet} className='bg-white mb-1 font-medium rounded-lg hover:bg-gray-200 px-8 py-2 text-black'>Create a new wallet</button>
+                <button onClick={()=>navigate('/importwallet')} className='bg-gray-700 mt-1 w-full font-medium rounded-lg hover:bg-gray-800 px-8 py-2 text-white'>Import wallet</button>
             </div>
+
+
         </div>
     )
 }

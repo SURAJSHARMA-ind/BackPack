@@ -5,6 +5,7 @@ import RecoveryWarming from "./RecoveryWarming";
 import SeedGenerator from "./SeedGenerator";
 import WalletMainScreen from "./WalletMainScreen";
 import WalletPopUp from './WalletPopUp'
+import Importwallet from "./ImportWallet";
 
 
-export {AllSet,CreatePass,RecoveryWarming,SeedGenerator,WalletMainScreen,MainScreen,WalletPopUp}
+export {AllSet,CreatePass,RecoveryWarming,SeedGenerator,WalletMainScreen,MainScreen,WalletPopUp,Importwallet}
