@@ -52,8 +52,6 @@ function ImportWallet() {
         setIsDisabled(!allFilled); 
     }, [mnemonics]);
 
-    // console.log('mnemonic is ',mnemonics);
-    // console.log('mnemonic join is ',mnemonics.join(' '));
     
     const importwallet = () => {
         localStorage.setItem('mnemonic', mnemonics.join(' ')); 

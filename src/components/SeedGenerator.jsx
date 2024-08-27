@@ -12,7 +12,7 @@ function SeedGenerator() {
   const [isChecked, setIsChecked] = useState(false);
   const [coppytoggle, setcoppytoggle] = useState("Click anywhere on this card to copy");
 
-  // Dispatch to generate a mnemonic if not generated yet
+  
   if (!mnemonic) {
     dispatch(MnemonicGenerator());
     dispatch(generateKeyPairs())

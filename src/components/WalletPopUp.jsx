@@ -47,8 +47,11 @@ function WalletPopUp() {
 
     const storedPassword = localStorage.getItem('pass')
     const handlePasswordSubmit = () => {
-        if (password == storedPassword) { // Replace with actual password validation
+        if (password == storedPassword) { 
             setPrivateKey(selectedWallet.privateKey);
+        }
+        else{
+            alert('Enterd Wrong Password')
         }
     };
 
@@ -80,7 +83,6 @@ function WalletPopUp() {
                 <h1 className='text-xl'>Wallets</h1>
                 <select onChange={SelectCurrency} className='bg-neutral-800 rounded-md hover:bg-neutral-900 m-2 p-2 text-white'>
                     <option value="Solana">Solana</option>
-                    <option value="Ethereum">Ethereum</option>
                 </select>
             </div>
 
@@ -116,29 +118,29 @@ function WalletPopUp() {
             </div>
 
             {isPopupVisible && (
-                <div className="fixed inset-1 flex items-center justify-center  bg-black bg-opacity-50">
-                    <div className="bg-neutral-800 p-6 rounded-lg  shadow-lg text-white max-w-sm w-full">
-                        <h2 className="text-xl font-bold mb-4">Enter Password</h2>
+                <div className="fixed inset-1 flex items-center justify-center   bg-black bg-opacity-50">
+                    <div className="bg-gray-800 p-6 rounded-lg  overflow-y-scroll hide-scrollbar  shadow-lg text-white max-w-sm w-full">
+                        <h2 className="text-xl font-bold text-center mb-4">On this page, you will see your secrets</h2>
                         <input
                             type="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            className="w-full p-2 mb-4 border rounded-md focus:outline-none text-black focus:ring-2 focus:ring-blue-500"
+                            className="w-full p-2 mb-4 border rounded-md bg-gray-900  focus:outline-none text-green-400      "
                             placeholder="Enter your password"
                         />
                         <button
                             onClick={handlePasswordSubmit}
-                            className="w-full bg-blue-500 hover:bg-blue-700 text-white p-2 rounded-md"
+                            className="w-full bg-red-600 hover:bg-red-700 font-medium text-white p-2 rounded-md"
                         >
-                            View Private Key
+                            Show Secret
                         </button>
                         {privateKey && (
                             <div className="mt-4">
                                 <p >Private Key:</p>
-                                <p className="bg-gray-100 p-2 rounded-md text-sm text-gray-900 break-all">{privateKey}</p>
+                                <p className="bg-gray-900 p-2  rounded-md text-sm text-green-400 break-all">{privateKey}</p>
                                 <button
                                     onClick={handlecopyprivatekey}
-                                    className="w-full mt-2 bg-green-500 hover:bg-green-700 text-white p-2 rounded-md"
+                                    className="w-full mt-2 bg-white hover:bg-gray-200 text-black p-2 rounded-md"
                                 >
                                     {copyprivatekey}
                                 </button>
@@ -146,7 +148,7 @@ function WalletPopUp() {
                         )}
                         <button
                             onClick={closeHandler}
-                            className="mt-4 w-full bg-red-500 hover:bg-red-700 text-white p-2 rounded-md"
+                            className="mt-4 w-full bg-gray-500 hover:bg-gray-700 text-white p-2 rounded-md"
                         >
                             Close
                         </button>
