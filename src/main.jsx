@@ -12,6 +12,7 @@ import {
 } from "react-router-dom";
 import store from './redux/store.js'
 import { Provider } from 'react-redux'
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 
 

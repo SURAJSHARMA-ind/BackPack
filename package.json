@@ -13,6 +13,7 @@
     "@react-icons/all-files": "^4.1.0",
     "@reduxjs/toolkit": "^2.2.7",
     "@solana/web3.js": "^1.95.2",
+    "@vercel/speed-insights": "^1.0.12",
     "axios": "^1.7.4",
     "bip39": "^3.1.0",
     "bip39-web": "^1.0.0",
