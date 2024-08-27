@@ -6,7 +6,7 @@ import { MnemonicGenerator, generateKeyPairs } from '../redux/wallet/seedGenerat
 function SeedGenerator() {
   const dispatch = useDispatch();
   const mnemonic = useSelector((state) => state.seedGenerator.mnemonic);
-  
+
 
   const navigate = useNavigate();
   const [isChecked, setIsChecked] = useState(false);
@@ -17,7 +17,7 @@ function SeedGenerator() {
     dispatch(MnemonicGenerator());
     dispatch(generateKeyPairs())
   }
- 
+
 
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
@@ -41,8 +41,8 @@ function SeedGenerator() {
         </Link>
       </div>
 
-      <div onClick={copytoClipboard} className="bg-neutral-800 cursor-pointer text-white p-2 md:p-6 lg:p-8 mt-8 rounded-lg shadow-md w-full max-w-lg md:max-w-xl lg:max-w-2xl">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-4 mb-4">
+      <div onClick={copytoClipboard} className="bg-gray-800 cursor-pointer text-white p-5 mt-8 rounded-lg  shadow-md w-full max-w-lg md:max-w-xl lg:max-w-2xl">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2  md:gap-4 mb-4">
           {mnemonicArray.map((word, index) => (
             <div key={index} className="flex items-center text-sm md:text-base lg:text-lg">
               <span className="mr-2 text-gray-400">{index + 1}</span>
@@ -50,9 +50,11 @@ function SeedGenerator() {
             </div>
           ))}
         </div>
-        <hr className="my-2" />
-        <div className="text-center text-gray-300 text-sm md:text-base lg:text-lg">
-          {coppytoggle}
+        <div>
+          <hr className="my-2" />
+          <div className="text-center text-gray-300 text-sm md:text-base lg:text-lg">
+            {coppytoggle}
+          </div>
         </div>
       </div>
 
