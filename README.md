@@ -1,13 +1,22 @@
-# Backpack Wallet Clone
-- This project is a basic clone of the Backpack crypto wallet, designed to provide foundational functionality for a Hierarchical Deterministic (HD) wallet. The wallet currently supports generating seed phrases and creating multiple wallets for both the Solana and Ethereum blockchains.
+# Backpack Clone
 
-# Features
-- <b> HD Wallet:</b> Implements Hierarchical Deterministic wallet structure, allowing for secure and systematic generation of multiple addresses from a single seed phrase.
-Seed Phrase Generation: Generates a seed phrase that can be used to restore all generated wallets.
+Backpack Clone is a web-based wallet application that allows you to manage multiple HD wallets for Solana. You can create new wallets, import existing ones, and view your wallet balances. Additionally, it integrates with the Kraken API to fetch real-time SOL/USD exchange rates.
 
-- <b>Multi-Blockchain Support:</b> Supports wallet creation for both Solana and Ethereum, two of the most popular blockchains.
+## Features
 
-# Tech Stack
-- <b>Frontend:</b> React.js with Tailwind CSS for styling.
+1. **Create Multiple HD Wallets:** Generate and manage multiple wallets using Hierarchical Deterministic (HD) keys for Solana.
+2. **Import Wallet:** Import existing Solana wallets using a mnemonic seed phrase.
+3. **View Wallet Balance:** Check the balance of your Solana wallets.
+4. **Fetch Exchange Rate:** Get real-time SOL/USD exchange rates from Kraken.
 
-- <b>Cryptography:</b> Utilizes libraries like ethers.js for Ethereum and @solana/web3.js for Solana to handle wallet generation and other cryptographic operations.
+## Libraries Used
+
+- **Vite**: For fast development and building.
+- **React Router**: For routing and navigation.
+- **Redux Toolkit**: For state management.
+- **BIP-39**: For generating and validating mnemonic seed phrases.
+- **Tailwind CSS**: For styling the user interface.
+- **Solana/Web3.js**: For interacting with the Solana blockchain.
+- **React Icons**: For incorporating various icons.
+- **ed25519-hd-key**: For generating HD keys.
+- **Kraken API**: For fetching exchange rates.
