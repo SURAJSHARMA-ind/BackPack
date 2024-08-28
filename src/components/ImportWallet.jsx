@@ -55,7 +55,7 @@ function ImportWallet() {
     
     const importwallet = () => {
         localStorage.setItem('mnemonic', mnemonics.join(' ')); 
-        navigate('/mainscreen')
+        navigate('/createpass')
     };
 
     return (

@@ -148,12 +148,12 @@ function MainScreen() {
             <p className='font-thin text-sm cursor-pointer text-gray-300'>Receive</p>
           </div>
         </Link>
-        <Link target='_blank' to={'https://faucet.solana.com'} >
+        
           <div className='flex flex-col items-center'>
             <FaArrowUp className='bg-neutral-800 cursor-pointer rounded-full p-3 w-10 h-10 text-blue-400' />
             <p className='font-thin text-sm text cursor-pointer text-gray-300'>Send</p>
           </div>
-        </Link>
+  
         <div className='flex flex-col items-center'>
           <IoMdSwap className='bg-neutral-800 cursor-pointer rounded-full p-3 w-10 h-10 text-blue-400' />
           <p className='font-thin text-sm text cursor-pointer text-gray-300'>Swap</p>
