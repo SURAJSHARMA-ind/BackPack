@@ -19,15 +19,15 @@ function AllSet() {
       </div>
       <div className="w-full flex flex-col md:flex-row gap-3 justify-center items-center">
         <div className="bg-slate-900 hover:bg-slate-700 text-gray-300 text-sm w-full md:w-1/6 p-4 py-6 flex flex-col items-center rounded-lg gap-3">
-          <img src="src/assets/linkedin.png" width="30px" alt="LinkedIn" />
+          <img src="public/assets/linkedin.png" width="30px" alt="LinkedIn" />
           <a href="https://www.linkedin.com/in/suraj76/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
         </div>
         <div className="bg-slate-900 hover:bg-slate-700 text-gray-300 text-sm w-full md:w-1/6 p-4 py-6 flex flex-col items-center rounded-lg gap-3">
-          <img src="src/assets/X-Logo.png" width="30px" alt="Twitter" />
+          <img src="public/assets/X-Logo.png" width="30px" alt="Twitter" />
           <a href="https://x.com/Surajsharm33155" target="_blank" rel="noopener noreferrer">@Surajsharm33155</a>
         </div>
         <div onClick={copydiscord} className="bg-slate-900 hover:bg-slate-700 text-gray-300 text-sm w-full md:w-1/6 p-4 py-6 flex flex-col items-center rounded-lg gap-3 cursor-pointer">
-          <img src="src/assets/discord.png" width="30px" alt="Discord" />
+          <img src="public/assets/discord.png" width="30px" alt="Discord" />
           <p>surajsharma2740</p>
         </div>
       </div>
