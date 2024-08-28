@@ -20,7 +20,7 @@ injectSpeedInsights();
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path='/' element={<App />}>
+    <Route exact path='/' element={<App />}>
       <Route path='' element={<WalletMainScreen />} />
       <Route path='/mainscreen' element={<MainScreen />} />
       <Route path='/warning' element={<RecoveryWarming />} />
