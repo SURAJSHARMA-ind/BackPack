@@ -24,12 +24,12 @@ function RecoveryWarming() {
             </div>
 
             <div className="bg-gray-800 p-4 flex items-center gap-3 rounded mb-4 h-max w-full max-w-md mx-4 md:mx-0">
-                <img src="public/assets/warning.png" className="h-4 md:h-8" alt="Warning Icon" />
+                <img src="/assets/warning.png" className="h-4 md:h-8" alt="Warning Icon" />
                 <span className="text-sm md:text-base lg:text-md">This is the ONLY way to recover your account if you lose access to your device or password.</span>
             </div>
 
             <div className="bg-gray-800 p-4 rounded flex items-center gap-3 mb-6 w-full max-w-md mx-4 md:mx-0">
-                <img src="public/assets/lock.png" className="h-6 md:h-8" alt="Lock Icon" />
+                <img src="/assets/lock.png" className="h-6 md:h-8" alt="Lock Icon" />
                 <span className="text-sm md:text-base lg:text-md">Write it down, store it in a safe place, and NEVER share it with anyone.</span>
             </div>
 

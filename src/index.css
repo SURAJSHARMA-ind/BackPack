@@ -4,13 +4,13 @@
 
 /* In your CSS file or in a Tailwind @layer directive */
 .bg-sol {
-    background-image: url('/public/assets/sol.png');
+    background-image: url('/assets/sol.png');
     border:none;
     background-size: cover;
   }
   
 .bg-eth{
-    background-image: url('/public/assets/ETH.png');
+    background-image: url('/assets/ETH.png');
     width: 3rem;
     height: 3rem;
     border:none;

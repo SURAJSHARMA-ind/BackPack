@@ -162,7 +162,7 @@ function MainScreen() {
 
       <div className='bg-black h-14 mt-16 rounded-md text-center flex justify-between items-center  cursor-pointer hover:bg-neutral-900 m-0 p-0 text-white w-full'>
         <div className='flex flex-row justify-center gap-2 items-center '>
-          <img className='rounded-full w-10 h-10 ml-2' src="/public/assets/sol.png" alt="sol" />
+          <img className='rounded-full w-10 h-10 ml-2' src="/assets/sol.png" alt="sol" />
           <div>
             <h1 className=' font-bold'>Solana</h1>
             <h1 className=' text-lg text-gray-500 '>{amount} Sol</h1>
