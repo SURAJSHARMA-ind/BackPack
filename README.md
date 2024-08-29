@@ -20,3 +20,69 @@ Backpack Clone is a web-based wallet application that allows you to manage multi
 - **React Icons**: For incorporating various icons.
 - **ed25519-hd-key**: For generating HD keys.
 - **Kraken API**: For fetching exchange rates.
+
+## Prerequisites
+
+Before running this project, ensure you have the following installed on your system:
+
+- **Node.js**: [Download Node.js](https://nodejs.org/)
+- **Git**: [Download Git](https://git-scm.com/)
+- **Text Editor/IDE**: Use a text editor like Visual Studio Code.
+
+## Steps to Run the Project Locally
+
+### 1. Clone the Repository
+
+Open your terminal or command prompt.
+
+Navigate to the directory where you want to clone the project.
+
+Run the following command to clone the repository:
+
+```bash
+git clone <repository-url>
+```
+
+### 2. Navigate to the Project Directory
+Once the repository is cloned, navigate to the project directory:
+
+```
+cd backpack-clone
+```
+### 3. Install Dependencies
+Install the required dependencies using npm (Node Package Manager) or yarn:
+
+```
+npm install
+```
+#### Or, if you're using yarn:
+
+```
+yarn install
+```
+### 4. Set Up Environment Variables
+Create a .env file in the root directory of the project.
+
+Add the following environment variables to configure the API keys and other settings:
+
+```
+VITE_API_KEY= your-alchemy-api-key
+```
+To get your api key signup to Alchemy 
+
+### 5. Run the Development Server
+Start the development server using the following command:
+
+
+```
+npm run dev
+```
+#### Or, if you're using yarn:
+
+```
+yarn dev
+```
+The application should now be running on http://localhost:5173 (or a different port as specified in the terminal).
+
+### 6. Access the Application
+Open your web browser and go to http://localhost:5173 to access the Backpack Clone application.
