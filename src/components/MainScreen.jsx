@@ -3,9 +3,12 @@ import { IoMdSwap } from "react-icons/io";
 import { FaArrowDown, FaArrowUp } from "react-icons/fa6";
 import { LuPanelRight } from "react-icons/lu";
 import { useSelector, useDispatch } from 'react-redux';
-import {  generateKeyPairs } from '../redux/wallet/seedGeneratorSlice';
+import { generateKeyPairs } from '../redux/wallet/seedGeneratorSlice';
 import axios from 'axios';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
+import QRCodeGenerator from './QRCodeGenerator';
+import { RxCross2 } from 'react-icons/rx';
+import { useSpring, animated } from '@react-spring/web'
 
 const apiKey = import.meta.env.VITE_API_KEY;
 
@@ -18,13 +21,19 @@ function MainScreen() {
   const [lowPrice, setlowPrice] = useState(0)
   const [percentVariation, setPercentVariation] = useState(0)
   const [changeinPrice, setChangeinPrice] = useState(0)
+  const [qrisVisibe, setQrIsVisible] = useState(false)
   const navigate = useNavigate();
   const dispatch = useDispatch();
   let username = "Animal";
 
+
   const wallets = useSelector((state) => state.seedGenerator.wallets);
   const walletno = useSelector((state) => state.navigator.wallet);
   const publicKey = wallets[walletno]?.publicKey || '';
+
+  const clossbtn = () => {
+    setQrIsVisible(false)
+  }
 
   useEffect(() => {
     if (wallets.length === 0) {
@@ -62,7 +71,7 @@ function MainScreen() {
       "jsonrpc": "2.0",
       "id": 1,
       "method": "getBalance",
-      "params": [`${publicKey}`] 
+      "params": [`${publicKey}`]
     };
     try {
       const response = await axios.post(`https://solana-devnet.g.alchemy.com/v2/${apiKey}`, postData, {
@@ -94,7 +103,7 @@ function MainScreen() {
     if (exchangeRate) {
       const currentRate = exchangeRate.c[0];
       const calculatedPrice = amount * currentRate;
-      setPrice(calculatedPrice); 
+      setPrice(calculatedPrice);
     }
   }, [exchangeRate, amount]);
 
@@ -103,9 +112,17 @@ function MainScreen() {
 
       const percentage = ((highPrice - lowPrice) / lowPrice) * 100
       setPercentVariation(percentage);
-      setChangeinPrice(highPrice-lowPrice)
+      setChangeinPrice(highPrice - lowPrice)
     }
   }, [lowPrice, highPrice, percentVariation])
+
+  const qrModalAnimation = useSpring({
+    opacity: qrisVisibe ? 1 : 0,  // Animate opacity based on qrisVisibe state
+    transform: qrisVisibe ? `translateY(0%)` : `translateY(100%)`,  // Animate vertical position based on qrisVisibe state
+    config: { tension: 80, friction: 5 },  // Control animation speed and bounce effect
+  });
+
+
 
   return (
     <div className='max-h-full min-h-screen bg-black text-white flex flex-col gap-6 p-4 md:gap-8 lg:gap-10 w-min-full'>
@@ -142,18 +159,18 @@ function MainScreen() {
       </div>
 
       <div className='flex flex-row justify-center gap-4 text-center'>
-        <Link target='_blank' to={'https://faucet.solana.com'}>
-          <div className='flex flex-col items-center'>
-            <FaArrowDown className='bg-neutral-800 cursor-pointer rounded-full p-3 w-10 h-10 text-blue-400' />
-            <p className='font-thin text-sm cursor-pointer text-gray-300'>Receive</p>
-          </div>
-        </Link>
-        
-          <div className='flex flex-col items-center'>
-            <FaArrowUp className='bg-neutral-800 cursor-pointer rounded-full p-3 w-10 h-10 text-blue-400' />
-            <p className='font-thin text-sm text cursor-pointer text-gray-300'>Send</p>
-          </div>
-  
+
+        <div onClick={() => setQrIsVisible(true)} className='flex flex-col items-center'>
+          <FaArrowDown className='bg-neutral-800 cursor-pointer rounded-full p-3 w-10 h-10 text-blue-400' />
+          <p className='font-thin text-sm cursor-pointer text-gray-300'>Receive</p>
+        </div>
+
+
+        <div className='flex flex-col items-center'>
+          <FaArrowUp className='bg-neutral-800 cursor-pointer rounded-full p-3 w-10 h-10 text-blue-400' />
+          <p className='font-thin text-sm text cursor-pointer text-gray-300'>Send</p>
+        </div>
+
         <div className='flex flex-col items-center'>
           <IoMdSwap className='bg-neutral-800 cursor-pointer rounded-full p-3 w-10 h-10 text-blue-400' />
           <p className='font-thin text-sm text cursor-pointer text-gray-300'>Swap</p>
@@ -174,6 +191,15 @@ function MainScreen() {
           <h1 className='text-green-300'>{percentVariation.toFixed(1)}%</h1>
         </div>
       </div>
+
+      <animated.div style={qrModalAnimation} className={` ${!qrisVisibe ? 'hidden' : ' transition-all'}  bg-black w-full  fixed`}>
+        <div className="flex flex-row w-[54%] justify-between">
+          <RxCross2 onClick={clossbtn} className='text-3xl  text-gray-400 hover:text-gray-500 cursor-pointer' />
+          <h1 className="text-2xl text-gray-200 font-semibold">Deposite</h1>
+        </div>
+        <QRCodeGenerator publicKey={publicKey} />
+      </animated.div>
+
     </div>
   );
 }
