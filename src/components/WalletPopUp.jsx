@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { generateKeyPairs } from '../redux/wallet/seedGeneratorSlice';
 import { setWalletNo } from '../redux/wallet/navigateSlice';
+import toast, { Toaster } from "react-hot-toast";
 
 function WalletPopUp() {
     const wallets = useSelector((state) => state.seedGenerator.wallets);
@@ -17,7 +18,7 @@ function WalletPopUp() {
     const [selectedWallet, setSelectedWallet] = useState(null);
     const [password, setPassword] = useState("");
     const [privateKey, setPrivateKey] = useState("");
-    const [copyprivatekey,setCopyprivatekey] = useState('Copy private key')
+    const [copyprivatekey, setCopyprivatekey] = useState('Copy private key')
 
     const onclickHandler = (index) => {
         dispatch(setWalletNo(index));
@@ -33,25 +34,25 @@ function WalletPopUp() {
         });
     };
 
-    const closeHandler = ()=>{
+    const closeHandler = () => {
         setIsPopupVisible(false)
         setPassword('')
         setPrivateKey('')
         setCopyprivatekey('Copy private key')
     }
 
-    const handlePrivateKeyClick = (data,index) => {
+    const handlePrivateKeyClick = (data, index) => {
         setSelectedWallet(wallets[index]);
         setIsPopupVisible(true);
     };
 
     const storedPassword = localStorage.getItem('pass')
     const handlePasswordSubmit = () => {
-        if (password == storedPassword) { 
+        if (password == storedPassword) {
             setPrivateKey(selectedWallet.privateKey);
         }
-        else{
-            alert('Enterd Wrong Password')
+        else {
+            toast.error('Enterd Wrong Password')
         }
     };
 
@@ -59,7 +60,7 @@ function WalletPopUp() {
         console.log(e.target.value);
     };
 
-    const handlecopyprivatekey =()=>{
+    const handlecopyprivatekey = () => {
         navigator.clipboard.writeText(privateKey)
         setCopyprivatekey('copied!')
     }
@@ -76,6 +77,7 @@ function WalletPopUp() {
 
     return (
         <div className='max-h-full min-h-screen bg-black flex flex-col justify-start text-white'>
+            <div><Toaster /></div>
             <div className='flex flex-start'>
                 <RxCross2 onClick={() => navigate('/mainscreen')} className='text-3xl m-3 text-gray-400 hover:text-gray-500 cursor-pointer' />
             </div>
@@ -107,7 +109,7 @@ function WalletPopUp() {
                                 </p>
                             )}
                         </div>
-                        <BsThreeDotsVertical className='text-xl mr-2' onClick={() => handlePrivateKeyClick(data,index)} />
+                        <BsThreeDotsVertical className='text-xl mr-2' onClick={() => handlePrivateKeyClick(data, index)} />
                     </div>
                 </div>
             ))}
