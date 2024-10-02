@@ -3,11 +3,11 @@ generate public and private key. ✅
 - if click on solana then generate for solana. ❌
 - if click on Ethereum then generate for Ethereum. ❌
 
-redux-toolkit for state management multiple wallets data.✅ | ❌
+redux-toolkit for state management multiple wallets data.✅ 
 
 
 
 Show user balance : BY using alchemy. ✅
-hide Api key using .env file.❌
+hide Api key using .env file.✅
 
 
