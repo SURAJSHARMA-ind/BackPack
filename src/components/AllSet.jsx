@@ -6,8 +6,6 @@ function AllSet() {
   const copydiscord = () => {
     navigator.clipboard.writeText('surajsharma2740')
   };
-
-  
   
   const navigate = useNavigate();
 

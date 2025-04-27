@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { updateMnemonics } from '../redux/wallet/seedGeneratorSlice';
+import { useDispatch } from 'react-redux';
 
 function ImportWallet() {
+    const dispatch = useDispatch()
+
     const [seedWord, setWordseed] = useState(12);
     const [displayseed, setDisplaySeed] = useState(24);
     const [isDisabled, setIsDisabled] = useState(true);
@@ -13,11 +17,12 @@ function ImportWallet() {
         if (seedWord === 12) {
             setWordseed(24);
             setMnemonics(Array(24).fill('')); 
+            setDisplaySeed(12)
         } else {
             setWordseed(12);
             setMnemonics(Array(12).fill('')); 
+            setDisplaySeed(24)
         }
-        setDisplaySeed(seedWord === 12 ? 24 : 12);
     };
 
    
@@ -54,7 +59,8 @@ function ImportWallet() {
 
     
     const importwallet = () => {
-        localStorage.setItem('mnemonic', mnemonics.join(' ')); 
+        dispatch(updateMnemonics(mnemonics))
+        // localStorage.setItem('mnemonic', mnemonics.join(' ')); 
         navigate('/createpass')
     };
 

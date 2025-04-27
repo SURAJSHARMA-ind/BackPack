@@ -13,7 +13,7 @@ import { useSpring, animated } from '@react-spring/web'
 const apiKey = import.meta.env.VITE_API_KEY;
 
 function MainScreen() {
-  const [copy, setCopy] = useState(null);
+  const [copy, setCopy] = useState(null); // why this?
   const [amount, setAmount] = useState("0.0");
   const [exchangeRate, setExchangeRate] = useState(null);
   const [price, setPrice] = useState(0);
@@ -35,11 +35,6 @@ function MainScreen() {
     setQrIsVisible(false)
   }
 
-  useEffect(() => {
-    if (wallets.length === 0) {
-      dispatch(generateKeyPairs());
-    }
-  }, [wallets, dispatch]);
 
   useEffect(() => {
     fetchSolPriceInUSD();

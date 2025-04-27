@@ -2,23 +2,24 @@
 import { createRoot } from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
-import { AllSet, CreatePass, MainScreen,WalletPopUp, RecoveryWarming, SeedGenerator, WalletMainScreen,Importwallet } from './components/index.js'
+import { AllSet, CreatePass, MainScreen, WalletPopUp, RecoveryWarming, SeedGenerator, WalletMainScreen, Importwallet } from './components/index.js'
 import {
   createBrowserRouter,
   createRoutesFromElements,
   Route,
   RouterProvider,
 } from "react-router-dom";
-import store from './redux/store.js'
-import { Provider } from 'react-redux'
+
 import { injectSpeedInsights } from '@vercel/speed-insights';
 import { inject } from "@vercel/analytics"
 inject()
 injectSpeedInsights();
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/es/integration/react'
+import { store, persistor } from './redux/store'; // adjust path if needed
+    
 
-
-
-const router = createBrowserRouter(
+const router = createBrowserRouter( 
   createRoutesFromElements(
     <Route exact path='/' element={<App />}>
       <Route path='' element={<WalletMainScreen />} />
@@ -37,8 +38,12 @@ const router = createBrowserRouter(
 
 createRoot(document.getElementById('root')).render(
   //<StrictMode>
-    <Provider store={store}>
+  <Provider store={store}>
+    <PersistGate
+      persistor={persistor}>
       <RouterProvider router={router} />
-    </Provider>
- //</StrictMode>,
+    </PersistGate>
+  </Provider>
+
+  //</StrictMode>,
 )

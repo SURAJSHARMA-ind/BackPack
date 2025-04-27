@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
+// import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+
 
 function RecoveryWarming() {
     const navigate = useNavigate();
     const [isChecked, setIsChecked] = useState(false);
-
+    // const dispatch = useDispatch()
     const handleCheckboxChange = () => {
         setIsChecked(!isChecked);
     };

@@ -1,35 +1,47 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { MnemonicGenerator, generateKeyPairs } from '../redux/wallet/seedGeneratorSlice';
 
 function SeedGenerator() {
   const dispatch = useDispatch();
-  const mnemonic = useSelector((state) => state.seedGenerator.mnemonic);
-
-
+  const mnemonic = useSelector((state) => state.seedGenerator.mnemonic || "");
   const navigate = useNavigate();
   const [isChecked, setIsChecked] = useState(false);
   const [coppytoggle, setcoppytoggle] = useState("Click anywhere on this card to copy");
 
-  
-  if (!mnemonic) {
+  useEffect(() => {
     dispatch(MnemonicGenerator());
-    dispatch(generateKeyPairs())
-  }
+  }, [dispatch]);
 
+  useEffect(() => {
+    if (mnemonic) {
+      dispatch(generateKeyPairs());
+    }
+  }, [dispatch, mnemonic]);
 
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
   };
 
   const copytoClipboard = () => {
-    navigator.clipboard.writeText(mnemonic);
-    setcoppytoggle("Copied");
+    if (mnemonic) {
+      navigator.clipboard.writeText(mnemonic);
+      setcoppytoggle("Copied");
+    } else {
+      setcoppytoggle("Mnemonic not available.");
+    }
   };
 
-  const mnemonicArray = mnemonic.split(' ');
-  console.log(mnemonicArray);
+  const mnemonicArray = mnemonic ? mnemonic.split(" ") : [];
+
+  if (!mnemonic || typeof mnemonic !== 'string') {
+    return (
+      <div className="flex justify-center items-center min-h-screen bg-black text-white">
+        <h1 className="text-2xl">Generating your magic phrase... 🪄</h1>
+      </div>
+    );
+  }
 
   return (
     <div className='flex flex-col justify-center items-center min-h-screen bg-black text-white p-4 md:p-6 lg:p-8'>
@@ -41,20 +53,17 @@ function SeedGenerator() {
         </Link>
       </div>
 
-      <div onClick={copytoClipboard} className="bg-gray-900 cursor-pointer text-white p-5 mt-8 rounded-lg  shadow-md w-full max-w-lg md:max-w-xl lg:max-w-2xl">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2  md:gap-4 mb-4">
+      <div onClick={copytoClipboard} className="bg-gray-900 cursor-pointer text-white p-5 mt-8 rounded-lg shadow-md w-full max-w-lg md:max-w-xl lg:max-w-2xl">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-4 mb-4">
           {mnemonicArray.map((word, index) => (
-            <div key={index} className="flex  bg-gray-800 p-2 rounded-md items-center text-sm md:text-base lg:text-lg">
+            <div key={index} className="flex bg-gray-800 p-2 rounded-md items-center text-sm md:text-base lg:text-lg">
               <span className="mr-2 text-gray-400">{index + 1}</span>
               <span>{word}</span>
             </div>
           ))}
         </div>
-        <div>
-          {/* <hr className="my-2" /> */}
-          <div className="text-center text-gray-300 text-sm md:text-base lg:text-lg">
-            {coppytoggle}
-          </div>
+        <div className="text-center text-gray-300 text-sm md:text-base lg:text-lg">
+          {coppytoggle}
         </div>
       </div>
 
