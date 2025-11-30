@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IoMdSwap } from "react-icons/io";
 import { FaArrowDown, FaArrowUp } from "react-icons/fa6";
 import { LuPanelRight } from "react-icons/lu";

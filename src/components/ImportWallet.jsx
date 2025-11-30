@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function ImportWallet() {
@@ -21,7 +21,7 @@ function ImportWallet() {
     };
 
    
-    const handlePaste = (e, index) => {
+    const handlePaste = (e) => {
         e.preventDefault(); 
         const pastedData = e.clipboardData.getData('text'); 
         const words = pastedData.trim().split(' '); 

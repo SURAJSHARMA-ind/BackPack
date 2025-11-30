@@ -1,4 +1,3 @@
-import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
 function WalletMainScreen() {
@@ -16,7 +15,7 @@ function WalletMainScreen() {
             <div className="scontainer flex mb-10 flex-col justify-center items-center">
                 <img src="/assets/image.png" width={'180px'} alt="BackPack Logo" />
                 <h1 className='text-4xl font-bold '>Welcome to Backpack</h1>
-                <p className='text-gray-400'>Let's get started</p>
+                <p className='text-gray-400'>{`Let's get started`}</p>
             </div>
 
             <div className="btns flex mt-8 flex-col justify-center items-center">

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import toast, { Toaster } from "react-hot-toast";
 function CreatePass() {
@@ -29,7 +29,7 @@ function CreatePass() {
       <div className='flex flex-col items-center mb-6'>
         <h1 className='text-3xl md:text-4xl lg:text-5xl font-bold mb-3'>Create a Password</h1>
         <p className='text-gray-400 text-sm md:text-base lg:text-lg mb-2'>It should be at least 8 characters.</p>
-        <p className='text-gray-400 text-sm md:text-base lg:text-lg'>You'll need this to unlock the Backpack.</p>
+        <p className='text-gray-400 text-sm md:text-base lg:text-lg'>{`You'll need this to unlock the Backpack.`}</p>
       </div>
 
       <form className='w-full max-w-md flex flex-col gap-4 text-center' onSubmit={handleSubmit}>

@@ -3,6 +3,8 @@ import { generateMnemonic, mnemonicToSeedSync } from "bip39";
 import { Keypair } from "@solana/web3.js";
 import { derivePath } from "ed25519-hd-key";
 import nacl from "tweetnacl";
+import { Buffer } from "buffer";
+
 
 
 const initialState = {
@@ -22,7 +24,7 @@ export const seedGeneratorSlice = createSlice({
       localStorage.setItem("mnemonic", mnemonicphrase);
     },
 
-    generateKeyPairs: (state, actions) => {
+    generateKeyPairs: (state) => {
       if (!state.mnemonic) {
         const storedMnemonic = localStorage.getItem("mnemonic");
         state.mnemonic = storedMnemonic;

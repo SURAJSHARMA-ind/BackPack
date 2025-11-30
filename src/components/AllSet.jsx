@@ -1,4 +1,3 @@
-import React from 'react'
 import { useNavigate } from 'react-router-dom';
 
 function AllSet() {
@@ -14,7 +13,7 @@ function AllSet() {
   return (
     <div className="h-screen bg-black flex flex-col gap-6 justify-center items-center text-white p-4">
       <div className="flex justify-center items-center flex-col text-center">
-        <h1 className="text-3xl md:text-4xl font-bold">You're all good!</h1>
+        <h1 className="text-3xl md:text-4xl font-bold">{`You're all good!`}</h1>
         <p className="text-gray-400 mt-2">You can connect with me</p>
       </div>
       <div className="w-full flex flex-col md:flex-row gap-3 justify-center items-center">
@@ -32,7 +31,7 @@ function AllSet() {
         </div>
       </div>
       <button onClick={() => navigate('/mainscreen')} className="p-2 bg-white text-black w-full md:w-1/3 text-md rounded-lg hover:bg-gray-300">
-        Let's go
+       {` Let's go`}
       </button>
     </div>
   )
